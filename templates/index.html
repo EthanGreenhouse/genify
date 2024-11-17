@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genify</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Genify: Playlist Enhancer</h1>
+        <p>Enter a Spotify playlist URL to generate your playlist details and recommendations.</p>
+    </header>
+
+    <main>
+        <form action="/Genify" method="POST">
+            <label for="playlist_url">Spotify Playlist URL:</label>
+            <input type="url" id="playlist_url" name="playlist_url" placeholder="https://open.spotify.com/playlist/..." required>
+            
+            <button type="submit">Genify</button>
+        </form>
+
+        <div class="error-message">
+            {% if error %}
+                <p>{{ error }}</p>
+            {% endif %}
+        </div>
+    </main>
+
+    <footer>
+        <p>By Ethan Greenhouse</p>
+    </footer>
+</body>
+</html>

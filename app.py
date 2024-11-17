@@ -128,13 +128,13 @@ def result():
 
         contributor_balance = enhancer.analyze_contributor_balance(playlist_id)
 
-        # Format tracks with artists as comma-separated strings
+        # Format tracks with artists as a list of dictionaries (name and id)
         formatted_tracks = []
         for track in tracks:
-            artist_names = [artist['name'] for artist in track['artists']]  # Extract artist names
+            artist_info = [{'name': artist['name'], 'id': artist['id']} for artist in track['artists']]  # Extract artist name and ID
             formatted_tracks.append({
                 'name': track['name'],
-                'artists': ', '.join(artist_names),  # Join artist names with commas
+                'artists': artist_info,  # Pass artist data as a list of dicts
                 'id': track['id']
             })
 

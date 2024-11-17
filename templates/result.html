@@ -1,53 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"> <!-- Define character encoding as UTF-8 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Make the website responsive on mobile devices -->
-    <title>Playlist Result</title> <!-- Title of the page displayed in the browser tab -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> <!-- Link to the CSS file -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genify - Playlist Enhancer - Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <header>
-        <h1>Generated Recommendations</h1> <!-- Main title of the page -->
-    </header>
-
-    <main>
-        {% if tracks %} <!-- Check if there are tracks to display -->
-            <h2>Your Playlist Recommendations</h2> <!-- Subheading for the playlist recommendations -->
-            <ul class="playlist">
-                {% for track in tracks %} <!-- Loop through each track in the 'tracks' list -->
-                    <li>
-                        <!-- Create a hyperlink for each song that links to the Spotify track page -->
-                        <a href="https://open.spotify.com/track/{{ track.id }}" target="_blank">{{ track.name }} by {{ track.artists }}</a>
-                        <!-- Link each track to its Spotify page using the track ID -->
-                    </li>
+    <div class="container">
+        <h1>Recommended Tracks</h1>
+        
+        <!-- Display Tracks -->
+        {% if tracks %}
+        <div class="tracks-list">
+            <h2>Recommended Tracks:</h2>
+            <ul>
+                {% for track in tracks %}
+                <li>
+                    <a href="https://open.spotify.com/track/{{ track.id }}" target="_blank" class="track-link">
+                        <strong>{{ track.name }}</strong> 
+                    </a>
+                    by 
+                    <span class="artists">
+                        {% for artist in track.artists %}
+                        {{ artist.name }}{% if not loop.last %}, {% endif %}
+                        {% endfor %}
+                    </span>
+                </li>
                 {% endfor %}
             </ul>
-        {% else %} <!-- If there are no tracks, display an error message -->
-            <div class="error-message">
-                <p>No playlist available. Please check your URL and try again.</p> <!-- Error message -->
-            </div>
+        </div>
+        {% else %}
+        <p>No tracks found for your playlist.</p>
         {% endif %}
 
-        <!-- Display contributor balance -->
-        <h3>Contributor Balance</h3>
+        <h2>Contributor Balance:</h2>
+        <!-- Display Contributor Balance -->
+        {% if contributor_balance %}
         <ul>
-            {% for contributor, count in contributor_balance.items() %} <!-- Loop through contributor balance data -->
-                <li>{{ contributor }} added {{ count }} tracks</li> <!-- Display contributor and their track count -->
+            {% for contributor, count in contributor_balance.items() %}
+            <li>{{ contributor }} added {{ count }} track{% if count > 1 %}s{% endif %}</li>
             {% endfor %}
         </ul>
-
-        <!-- Go back button -->
-        <div class="go-back">
-            <a href="{{ url_for('index') }}"> <!-- Link to go back to the homepage -->
-                <button>Go Back</button> <!-- Go back button -->
-            </a>
-        </div>
-
-    </main>
+        {% else %}
+        <p>No contributor data available.</p>
+        {% endif %}
+    </div>
 
     <footer>
-        <p>By: Ethan Greenhouse</p> <!-- Footer with author's name -->
+        <p>&copy; 2024 Ethan Greenhouse</p>
     </footer>
 </body>
 </html>

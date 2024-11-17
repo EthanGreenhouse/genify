@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-    width: 60%;
+    width: 50%; /* Make the container skinnier */
     margin: 50px auto;
     background-color: #fff;
     padding: 30px;
@@ -99,4 +99,42 @@ label, span {
 
 .go-back button:hover {
     background-color: #046d69;
+}
+
+.tracks-list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tracks-list li {
+    display: flex; /* Align track name and artists horizontally */
+    align-items: center; /* Vertically center the content */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    text-align: left; /* Align text to the left */
+}
+
+.tracks-list li a {
+    color: #054d4a;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 10px; /* Add space between song name and artist(s) */
+}
+
+.tracks-list .artists {
+    font-size: 14px;
+    color: #054d4a;
+    display: inline; /* Ensure artists are displayed inline */
+}
+
+.tracks-list .artists a {
+    color: #054d4a;
+    text-decoration: none;
+    padding: 0 5px;
+    font-weight: normal;
 }

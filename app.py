@@ -1,4 +1,4 @@
-# Spotify playlist enhancer
+# Genify
 # Ethan Greenhouse 5/16/2024
 
 # Import necessary modules from Flask, Spotipy, and other libraries
@@ -12,7 +12,6 @@ from typing import Dict, List  # Import type annotations for type hinting
 
 # Initialize the Flask web application with a custom template folder
 app = Flask(__name__, template_folder='templates')
-
 # Spotify API credentials (from environment variables for security)
 SPOTIFY_CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')  # Fetch Spotify Client ID from environment variable
 SPOTIFY_CLIENT_SECRET = os.getenv('SPOTIFY_CLIENT_SECRET')  # Fetch Spotify Client Secret from environment variable
@@ -118,32 +117,37 @@ def index():
 
 @app.route('/result', methods=['POST'])
 def result():
-    # Your code for processing the form
-    return render_template('result.html')
-
-# Route for handling the form submission and analysis
-@app.route('/analyze', methods=['POST'])
-def analyze():
-    playlist_input = request.form['playlist_input']
-    playlist_id = playlist_input.strip()  # Clean up the playlist ID (e.g., remove spaces)
-
+    playlist_input = request.form['spotify_url']  # Make sure this matches the name of your input field
+    playlist_id = playlist_input.strip()  # Clean up the playlist URL (e.g., remove spaces)
+    
     # Create an instance of the SpotifyPlaylistEnhancer class
     enhancer = SpotifyPlaylistEnhancer(
         client_id=SPOTIFY_CLIENT_ID,
         client_secret=SPOTIFY_CLIENT_SECRET,
         redirect_uri=SPOTIFY_REDIRECT_URI
     )
+    
+    try:
+        # Get the suggested similar tracks based on the provided playlist
+        tracks = enhancer.suggest_similar_tracks(playlist_id)
+        
+        # Analyze the contributor balance for the playlist (who added which tracks)
+        contributor_balance = enhancer.analyze_contributor_balance(playlist_id)
 
-    # Get the suggested similar tracks based on the provided playlist
-    tracks = enhancer.suggest_similar_tracks(playlist_id)
-    # Analyze the contributor balance for the playlist (who added which tracks)
-    contributor_balance = enhancer.analyze_contributor_balance(playlist_id)
+        # Log tracks and contributor_balance to check the data
+        print("Tracks:", tracks)  # Print tracks data for debugging
+        print("Contributor Balance:", contributor_balance)  # Print contributor balance
 
-    # Format the track data for rendering in the template
-    formatted_tracks = [{'name': track['name'], 'artists': ', '.join(artist['name'] for artist in track['artists']), 'id': track['id']} for track in tracks]
+        # Format the track data for rendering in the template
+        formatted_tracks = [{'name': track['name'], 'artists': ', '.join(artist['name'] for artist in track['artists']), 'id': track['id']} for track in tracks]
 
-    # Render and return the 'result.html' template with the tracks and contributor data
-    return render_template('result.html', tracks=formatted_tracks, contributor_balance=contributor_balance)
+        # Render and return the 'result.html' template with the tracks and contributor data
+        return render_template('result.html', tracks=formatted_tracks, contributor_balance=contributor_balance)
+    
+    except Exception as e:
+        error_message = f"Error: {str(e)}"
+        print(error_message)  # Log the error for debugging
+        return render_template('result.html', error=error_message)
 
 # Run the Flask application
 if __name__ == '__main__':

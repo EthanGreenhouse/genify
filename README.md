@@ -2,6 +2,8 @@
 
 Genify is a Spotify playlist enhancer that generates song recommendations based on an existing playlist. The app uses the Spotify API to analyze the playlist and suggests tracks with similar audio features.
 
+Website: https://genify-cead188b5b8a.herokuapp.com
+
 ## Features
 
 - Enter a Spotify playlist URL to generate recommendations.
@@ -48,10 +50,6 @@ Genify is a Spotify playlist enhancer that generates song recommendations based 
    ```
 
 ## Usage
-
-Website: https://genify-cead188b5b8a.herokuapp.com
-
-*OR*
 
 Self Host
 1. Run the application:

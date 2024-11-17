@@ -13,9 +13,12 @@
     </header>
 
     <main>
-        <form action="/Genify" method="POST">
+        <form action="/result" method="POST">
             <label for="playlist_url">Spotify Playlist URL:</label>
-            <input type="url" id="playlist_url" name="playlist_url" placeholder="https://open.spotify.com/playlist/..." required>
+            <input type="text" name="spotify_url" placeholder="https://open.spotify.com/playlist/..." required>
+            
+            <button type="submit">Genify</button>
+        </form>
             
             <button type="submit">Genify</button>
         </form>

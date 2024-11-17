@@ -1,33 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playlist Result</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <meta charset="UTF-8"> <!-- Define character encoding as UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Make the website responsive on mobile devices -->
+    <title>Playlist Result</title> <!-- Title of the page displayed in the browser tab -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> <!-- Link to the CSS file -->
 </head>
 <body>
     <header>
-        <h1>Generated Recommendations</h1>
+        <h1>Generated Recommendations</h1> <!-- Main title of the page -->
     </header>
 
     <main>
-        {% if playlist %}
-            <h2>Your Playlist</h2>
+        {% if tracks %} <!-- Check if there are tracks to display -->
+            <h2>Your Playlist Recommendations</h2> <!-- Subheading for the playlist recommendations -->
             <ul class="playlist">
-                {% for track in playlist %}
-                    <li>{{ track.name }} by {{ track.artist }}</li>
+                {% for track in tracks %} <!-- Loop through each track in the 'tracks' list -->
+                    <li>
+                        <!-- Create a hyperlink for each song that links to the Spotify track page -->
+                        <a href="https://open.spotify.com/track/{{ track.id }}" target="_blank">{{ track.name }} by {{ track.artists }}</a>
+                        <!-- Link each track to its Spotify page using the track ID -->
+                    </li>
                 {% endfor %}
             </ul>
-        {% else %}
+        {% else %} <!-- If there are no tracks, display an error message -->
             <div class="error-message">
-                <p>No playlist available. Please check your URL and try again.</p>
+                <p>No playlist available. Please check your URL and try again.</p> <!-- Error message -->
             </div>
         {% endif %}
+
+        <!-- Display contributor balance -->
+        <h3>Contributor Balance</h3>
+        <ul>
+            {% for contributor, count in contributor_balance.items() %} <!-- Loop through contributor balance data -->
+                <li>{{ contributor }} added {{ count }} tracks</li> <!-- Display contributor and their track count -->
+            {% endfor %}
+        </ul>
+
+        <!-- Regenerate Button: Submits the same playlist URL to regenerate recommendations -->
+        <div class="regenerate">
+            <form action="/analyze" method="POST"> <!-- Form to regenerate the recommendations -->
+                <input type="hidden" name="playlist_input" value="{{ playlist_url }}"> <!-- Hidden field to pass playlist URL -->
+                <button type="submit">Regenerate Recommendations</button> <!-- Button to submit form -->
+            </form>
+        </div>
+
+        <!-- Go back button -->
+        <div class="go-back">
+            <a href="{{ url_for('index') }}"> <!-- Link to go back to the homepage -->
+                <button>Go Back</button> <!-- Go back button -->
+            </a>
+        </div>
+
     </main>
 
     <footer>
-        <p>By: Ethan Greenhouse</p>
+        <p>By: Ethan Greenhouse</p> <!-- Footer with author's name -->
     </footer>
 </body>
 </html>

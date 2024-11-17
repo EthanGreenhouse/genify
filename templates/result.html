@@ -14,18 +14,24 @@
         {% if tracks %}
         <div class="tracks-list">
             <h2>Recommended Tracks:</h2>
-            <ul>
+            <ul class="track-ul">
                 {% for track in tracks %}
-                <li>
+                <li class="track-item">
                     <a href="https://open.spotify.com/track/{{ track.id }}" target="_blank" class="track-link">
-                        <strong>{{ track.name }}</strong> 
+                        <div class="track-info">
+                            <div class="track-name">
+                                <strong>{{ track.name }}</strong>
+                            </div>
+                            <div class="track-artists">
+                                by 
+                                <span class="artists">
+                                    {% for artist in track.artists %}
+                                        <a href="https://open.spotify.com/artist/{{ artist.id }}" target="_blank">{{ artist.name }}</a>{% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                </span>
+                            </div>
+                        </div>
                     </a>
-                    by 
-                    <span class="artists">
-                        {% for artist in track.artists %}
-                            <a href="https://open.spotify.com/artist/{{ artist.id }}" target="_blank">{{ artist.name }}</a>{% if not loop.last %}, {% endif %}
-                        {% endfor %}
-                    </span>
                 </li>
                 {% endfor %}
             </ul>

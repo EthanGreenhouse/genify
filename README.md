@@ -6,9 +6,9 @@ Website: https://genify-cead188b5b8a.herokuapp.com
 
 ## Features
 
-- Enter a Spotify playlist URL to generate recommendations.
-- View a list of similar tracks based on the audio features (danceability, energy, valence) of your playlist.
-- View contributor balance for the playlist (who added which tracks).
+- Generate recommendations based on audio features of your playlist.
+- Adjust weighting of audio features.
+- View contributor balance for the playlist.
 - Navigate easily with a clean, responsive UI.
 
 ## Requirements

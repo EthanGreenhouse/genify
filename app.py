@@ -26,7 +26,7 @@ class SpotifyPlaylistEnhancer:
             scope=scope
         ))
 
-    def suggest_similar_tracks(self, playlist_id: str, num_suggestions: int = 5, danceability: float = 0.5, energy: float = 0.5, valence: float = 0.5) -> List[Dict]:
+    def suggest_similar_tracks(self, playlist_id: str, num_suggestions: int = 6, danceability: float = 0.5, energy: float = 0.5, valence: float = 0.5) -> List[Dict]:
         try:
             results = self.sp.playlist_tracks(playlist_id)
             tracks = results['items']
@@ -128,7 +128,15 @@ def result():
 
         contributor_balance = enhancer.analyze_contributor_balance(playlist_id)
 
-        formatted_tracks = [{'name': track['name'], 'artists': ', '.join(artist['name'] for artist in track['artists']), 'id': track['id']} for track in tracks]
+        # Format tracks with artists as comma-separated strings
+        formatted_tracks = []
+        for track in tracks:
+            artist_names = [artist['name'] for artist in track['artists']]  # Extract artist names
+            formatted_tracks.append({
+                'name': track['name'],
+                'artists': ', '.join(artist_names),  # Join artist names with commas
+                'id': track['id']
+            })
 
         return render_template('result.html', tracks=formatted_tracks, contributor_balance=contributor_balance)
 

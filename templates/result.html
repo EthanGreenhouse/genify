@@ -37,14 +37,6 @@
             {% endfor %}
         </ul>
 
-        <!-- Regenerate Button: Submits the same playlist URL to regenerate recommendations -->
-        <div class="regenerate">
-            <form action="/analyze" method="POST"> <!-- Form to regenerate the recommendations -->
-                <input type="hidden" name="playlist_input" value="{{ playlist_url }}"> <!-- Hidden field to pass playlist URL -->
-                <button type="submit">Regenerate Recommendations</button> <!-- Button to submit form -->
-            </form>
-        </div>
-
         <!-- Go back button -->
         <div class="go-back">
             <a href="{{ url_for('index') }}"> <!-- Link to go back to the homepage -->

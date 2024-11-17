@@ -1,86 +1,108 @@
 /* Reset some basic styles */
 body, h1, h2, p, ul {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    font-family: Arial, sans-serif; /* Set default font */
 }
 
-/* Layout */
+/* Layout styles */
 header {
-    background-color: #2d2d2d;
-    color: white;
-    padding: 20px;
-    text-align: center;
+    background-color: #2d2d2d; /* Dark gray background for the header */
+    color: white; /* White text color */
+    padding: 20px; /* Add padding around the header */
+    text-align: center; /* Center the text in the header */
 }
 
 main {
-    padding: 20px;
-    max-width: 900px;
-    margin: 0 auto;
+    padding: 20px; /* Add padding inside the main content area */
+    max-width: 900px; /* Limit the width of the main content */
+    margin: 0 auto; /* Center the main content horizontally */
 }
 
 footer {
-    background-color: #f1f1f1;
-    text-align: center;
-    padding: 10px;
-    font-size: 14px;
+    background-color: #f1f1f1; /* Light gray background for the footer */
+    text-align: center; /* Center the text in the footer */
+    padding: 10px; /* Add padding around the footer */
+    font-size: 14px; /* Set a smaller font size for the footer */
 }
 
+/* Button styles */
 button {
-    background-color: #1db954; /* Spotify green */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
+    background-color: #1db954; /* Spotify green background for buttons */
+    color: white; /* White text color */
+    padding: 10px 20px; /* Add padding inside the button */
+    border: none; /* Remove border */
+    font-size: 16px; /* Set button text size */
+    cursor: pointer; /* Change cursor to pointer on hover */
 }
 
 button:hover {
-    background-color: #1ed760; /* Lighter green */
+    background-color: #1ed760; /* Lighter green when button is hovered */
 }
 
+/* Input field styles */
 input[type="url"] {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    font-size: 16px;
+    width: 100%; /* Make input field take up full width */
+    padding: 10px; /* Add padding inside the input */
+    margin-top: 10px; /* Add margin on top */
+    margin-bottom: 20px; /* Add margin at the bottom */
+    font-size: 16px; /* Set font size for the input text */
 }
 
 input[type="url"]:focus {
-    outline: none;
-    border: 2px solid #1db954;
+    outline: none; /* Remove the default focus outline */
+    border: 2px solid #1db954; /* Add a green border when the input is focused */
 }
 
+/* Playlist styles */
 ul.playlist {
-    list-style-type: none;
-    padding: 0;
+    list-style-type: none; /* Remove default bullet points from the list */
+    padding: 0; /* Remove default padding */
 }
 
 ul.playlist li {
-    background: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 5px;
+    background: #f9f9f9; /* Light gray background for each playlist item */
+    border: 1px solid #ddd; /* Light border around each item */
+    padding: 10px; /* Add padding inside each list item */
+    margin-bottom: 5px; /* Add margin below each list item */
 }
 
-.error-message {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 15px;
-    border: 1px solid #f5c6cb;
-    border-radius: 5px;
-}
-
+/* Heading styles */
 h1, h2 {
-    font-size: 24px;
+    font-size: 24px; /* Set the font size for main headings */
 }
 
 h2 {
-    margin-top: 20px;
-    font-size: 20px;
+    margin-top: 20px; /* Add top margin for sub-headings */
+    font-size: 20px; /* Set a smaller font size for sub-headings */
 }
 
 footer p {
-    font-size: 12px;
+    font-size: 12px; /* Set a smaller font size for footer text */
+}
+
+/* Styles for the song links */
+.playlist a {
+    text-decoration: none; /* Remove underline from the links */
+    color: #1DB954;  /* Spotify green color for the links */
+    font-weight: bold; /* Make the links bold */
+}
+
+.playlist a:hover {
+    text-decoration: underline; /* Underline the link when hovered */
+}
+
+/* Styles for the "go back" button */
+.go-back button {
+    background-color: #1DB954;  /* Spotify green background for the "go back" button */
+    color: white; /* White text color */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Add padding inside the button */
+    font-size: 16px; /* Set button text size */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    margin-top: 20px; /* Add margin at the top of the button */
+}
+
+.go-back button:hover {
+    background-color: #1ed760;  /* Slightly lighter green on hover */
 }

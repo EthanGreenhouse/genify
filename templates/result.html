@@ -23,7 +23,7 @@
                     by 
                     <span class="artists">
                         {% for artist in track.artists %}
-                        {{ artist.name }}{% if not loop.last %}, {% endif %}
+                            <a href="https://open.spotify.com/artist/{{ artist.id }}" target="_blank">{{ artist.name }}</a>{% if not loop.last %}, {% endif %}
                         {% endfor %}
                     </span>
                 </li>
@@ -45,6 +45,10 @@
         {% else %}
         <p>No contributor data available.</p>
         {% endif %}
+
+        <div class="go-back">
+            <button onclick="window.history.back();">Go Back</button>
+        </div>
     </div>
 
     <footer>

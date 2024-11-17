@@ -1,35 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Genify: Playlist Enhancer</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <meta charset="UTF-8"> <!-- Define character encoding as UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Make the website responsive on mobile devices -->
+    <title>Genify</title> <!-- Title of the page displayed in the browser tab -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> <!-- Link to the CSS file -->
 </head>
 <body>
     <header>
-        <h1>Genify: Playlist Enhancer</h1>
-        <p>Enter a Spotify playlist URL to generate your playlist details and recommendations.</p>
+        <h1>Genify: Playlist Enhancer</h1> <!-- Main title of the page -->
+        <p>Enter a Spotify playlist URL to generate your playlist details and recommendations</p> <!-- Description of what the site does -->
     </header>
 
     <main>
-        <form action="/result" method="POST">
-            <label for="playlist_url">Spotify Playlist URL:</label>
-            <input type="text" name="spotify_url" placeholder="https://open.spotify.com/playlist/..." required>
-            
-            <button type="submit">Genify</button>
+        <form action="/result" method="POST"> <!-- Form for submitting the playlist URL -->
+            <label for="spotify_url">Spotify Playlist URL:</label> <!-- Label for the input field -->
+            <input type="text" name="spotify_url" placeholder="https://open.spotify.com/playlist/..." required> <!-- Input field for entering playlist URL -->
+            <button type="submit">Genify</button> <!-- Submit button to send the form -->
         </form>
 
-        <!-- Display Error Message if Available -->
+        <!-- Error Message: Displays an error if there is one (such as an invalid URL) -->
         <div class="error-message">
-            {% if error %}
-                <p>{{ error }}</p>
+            {% if error %} <!-- If there is an error, display it -->
+                <p>{{ error }}</p> <!-- Display the error message -->
             {% endif %}
         </div>
     </main>
 
     <footer>
-        <p>By: Ethan Greenhouse</p>
+        <p>By: Ethan Greenhouse</p> <!-- Footer with author's name -->
     </footer>
 </body>
 </html>

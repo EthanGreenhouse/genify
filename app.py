@@ -1,7 +1,7 @@
-# Genify
-# Ethan Greenhouse 5/16/2024
+# Genify: Playlist Enhancer
+# Ethan Greenhouse 
+# 5/16/2024
 
-# Import necessary modules from Flask, Spotipy, and other libraries
 from flask import Flask, render_template, request
 from spotipy.oauth2 import SpotifyOAuth
 import spotipy
@@ -10,16 +10,12 @@ import os
 from collections import defaultdict
 from typing import Dict, List
 
-# Initialize the Flask web application with a custom template folder
 app = Flask(__name__, template_folder='templates')
 
-# Spotify API credentials (from environment variables for security)
 SPOTIFY_CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')
 SPOTIFY_CLIENT_SECRET = os.getenv('SPOTIFY_CLIENT_SECRET')
 SPOTIFY_REDIRECT_URI = "http://localhost:8888/callback"
 
-
-# SpotifyPlaylistEnhancer class for interacting with the Spotify API
 class SpotifyPlaylistEnhancer:
     def __init__(self, client_id: str, client_secret: str, redirect_uri: str):
         scope = "playlist-modify-public playlist-modify-private playlist-read-collaborative user-library-read"
@@ -30,7 +26,7 @@ class SpotifyPlaylistEnhancer:
             scope=scope
         ))
 
-    def suggest_similar_tracks(self, playlist_id: str, num_suggestions: int = 6) -> List[Dict]:
+    def suggest_similar_tracks(self, playlist_id: str, num_suggestions: int = 5, danceability: float = 0.5, energy: float = 0.5, valence: float = 0.5) -> List[Dict]:
         try:
             results = self.sp.playlist_tracks(playlist_id)
             tracks = results['items']
@@ -38,10 +34,7 @@ class SpotifyPlaylistEnhancer:
             if not tracks:
                 raise ValueError("Playlist is empty")
 
-            valid_tracks = [
-                track['track'] for track in tracks
-                if track['track'] and track['track']['id']
-            ]
+            valid_tracks = [track['track'] for track in tracks if track['track'] and track['track']['id']]
 
             if not valid_tracks:
                 raise ValueError("No valid tracks found in playlist")
@@ -69,16 +62,13 @@ class SpotifyPlaylistEnhancer:
                 seed_tracks=seed_tracks,
                 seed_artists=seed_artists,
                 seed_genres=seed_genre,
-                target_danceability=avg_features['danceability'],
-                target_energy=avg_features['energy'],
-                target_valence=avg_features['valence'],
+                target_danceability=danceability,
+                target_energy=energy,
+                target_valence=valence,
                 limit=num_suggestions
             )
 
-            new_tracks = [
-                track for track in recommendations['tracks']
-                if track['id'] not in track_ids
-            ]
+            new_tracks = [track for track in recommendations['tracks'] if track['id'] not in track_ids]
 
             return new_tracks[:num_suggestions]
 
@@ -107,16 +97,19 @@ class SpotifyPlaylistEnhancer:
 
         return dict(contributor_counts)
 
-
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 @app.route('/result', methods=['POST'])
 def result():
     playlist_input = request.form['spotify_url']
     playlist_id = playlist_input.strip()
+
+    num_recommendations = int(request.form['num_recommendations'])
+    danceability = float(request.form['danceability'])
+    energy = float(request.form['energy'])
+    valence = float(request.form['valence'])
 
     enhancer = SpotifyPlaylistEnhancer(
         client_id=SPOTIFY_CLIENT_ID,
@@ -125,11 +118,15 @@ def result():
     )
 
     try:
-        tracks = enhancer.suggest_similar_tracks(playlist_id)
-        contributor_balance = enhancer.analyze_contributor_balance(playlist_id)
+        tracks = enhancer.suggest_similar_tracks(
+            playlist_id,
+            num_suggestions=num_recommendations,
+            danceability=danceability,
+            energy=energy,
+            valence=valence
+        )
 
-        print("Tracks:", tracks)
-        print("Contributor Balance:", contributor_balance)
+        contributor_balance = enhancer.analyze_contributor_balance(playlist_id)
 
         formatted_tracks = [{'name': track['name'], 'artists': ', '.join(artist['name'] for artist in track['artists']), 'id': track['id']} for track in tracks]
 
@@ -137,9 +134,7 @@ def result():
 
     except Exception as e:
         error_message = f"Error: {str(e)}"
-        print(error_message)
         return render_template('result.html', error=error_message)
-
 
 if __name__ == '__main__':
     app.run(debug=True)

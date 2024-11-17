@@ -116,6 +116,11 @@ class SpotifyPlaylistEnhancer:
 def index():
     return render_template('index.html')
 
+@app.route('/result', methods=['POST'])
+def result():
+    # Your code for processing the form
+    return render_template('result.html')
+
 # Route for handling the form submission and analysis
 @app.route('/analyze', methods=['POST'])
 def analyze():

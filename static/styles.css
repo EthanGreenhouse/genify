@@ -80,3 +80,23 @@ label, span {
     display: inline-block;
     margin-right: 10px;
 }
+
+.go-back {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.go-back button {
+    padding: 10px 20px;
+    background-color: #054d4a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.go-back button:hover {
+    background-color: #046d69;
+}

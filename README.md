@@ -49,7 +49,6 @@ Genify is a Spotify playlist enhancer that generates song recommendations based 
 
 ## Usage
 
-Self Host
 1. Run the application:
    ```bash
    python app.py

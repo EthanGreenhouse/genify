@@ -1,34 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"> <!-- Define character encoding as UTF-8 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Make the website responsive on mobile devices -->
-    <title>Genify</title> <!-- Title of the page displayed in the browser tab -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> <!-- Link to the CSS file -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genify - Playlist Enhancer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <header>
-        <h1>Genify: Playlist Enhancer</h1> <!-- Main title of the page -->
-        <p>Enter a Spotify playlist URL to generate your playlist details and recommendations</p> <!-- Description of what the site does -->
-    </header>
+    <div class="container">
+        <h1>Genify - Playlist Enhancer</h1>
 
-    <main>
-        <form action="/result" method="POST"> <!-- Form for submitting the playlist URL -->
-            <label for="spotify_url">Spotify Playlist URL:</label> <!-- Label for the input field -->
-            <input type="text" name="spotify_url" placeholder="https://open.spotify.com/playlist/..." required> <!-- Input field for entering playlist URL -->
-            <button type="submit">Genify</button> <!-- Submit button to send the form -->
+        <form action="/result" method="POST">
+            <!-- Spotify Playlist URL input -->
+            <label for="spotify_url">Enter Spotify Playlist URL:</label>
+            <input type="text" id="spotify_url" name="spotify_url" required>
+
+            <!-- Slider for Number of Recommendations -->
+            <label for="num_recommendations">Number of Recommendations:</label>
+            <span id="num_recommendations_value">5</span>
+            <div class="slider-container">
+                <input type="range" id="num_recommendations" name="num_recommendations" min="1" max="20" value="5">
+            </div>
+
+            <!-- Slider for Danceability -->
+            <label for="danceability">Danceability:</label>
+            <span id="danceability_value">0.5</span>
+            <div class="slider-container">
+                <input type="range" id="danceability" name="danceability" min="0" max="1" step="0.1" value="0.5">
+            </div>
+
+            <!-- Slider for Energy -->
+            <label for="energy">Energy:</label>
+            <span id="energy_value">0.5</span>
+            <div class="slider-container">
+                <input type="range" id="energy" name="energy" min="0" max="1" step="0.1" value="0.5">
+            </div>
+
+            <!-- Slider for Valence -->
+            <label for="valence">Valence:</label>
+            <span id="valence_value">0.5</span>
+            <div class="slider-container">
+                <input type="range" id="valence" name="valence" min="0" max="1" step="0.1" value="0.5">
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit">Generate Recommendations</button>
         </form>
-
-        <!-- Error Message: Displays an error if there is one (such as an invalid URL) -->
-        <div class="error-message">
-            {% if error %} <!-- If there is an error, display it -->
-                <p>{{ error }}</p> <!-- Display the error message -->
-            {% endif %}
-        </div>
-    </main>
+    </div>
 
     <footer>
-        <p>By: Ethan Greenhouse</p> <!-- Footer with author's name -->
+        <p>&copy; 2024 Ethan Greenhouse</p>
     </footer>
+
+    <script>
+        // Function to update the slider values dynamically
+        function updateSliderValue(sliderId, displayId) {
+            const slider = document.getElementById(sliderId);
+            const display = document.getElementById(displayId);
+            display.textContent = slider.value;
+        }
+
+        // Event listeners for sliders
+        document.getElementById('num_recommendations').addEventListener('input', function() {
+            updateSliderValue('num_recommendations', 'num_recommendations_value');
+        });
+        document.getElementById('danceability').addEventListener('input', function() {
+            updateSliderValue('danceability', 'danceability_value');
+        });
+        document.getElementById('energy').addEventListener('input', function() {
+            updateSliderValue('energy', 'energy_value');
+        });
+        document.getElementById('valence').addEventListener('input', function() {
+            updateSliderValue('valence', 'valence_value');
+        });
+    </script>
 </body>
 </html>
